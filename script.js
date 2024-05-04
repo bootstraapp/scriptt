@@ -3,3 +3,4 @@ function overrideImportantStyle() {
     bodyElement.style.setProperty('display', 'none', 'important');
 }
 overrideImportantStyle();
+
