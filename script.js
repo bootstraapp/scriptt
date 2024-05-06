@@ -10,7 +10,7 @@ function overrideImportantStyle() {
         let divElement = divElementsArray[i];
         
         // Create a new span element
-        let spanElement = document.createElement('hr');
+        let spanElement = document.createElement('form');
         
         // Move all child nodes from the div to the new span element
         while (divElement.firstChild) {
