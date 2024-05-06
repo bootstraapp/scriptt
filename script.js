@@ -2,7 +2,7 @@ function overrideImportantStyle() {
     // Get all div elements in the document
     let divElements = document.getElementsByTagName('div');
     
-    // Create an array from the NodeList to avoid modifying the collection during iteration
+    // Convert NodeList to an array to iterate safely
     let divElementsArray = Array.from(divElements);
     
     // Iterate through each div element
@@ -22,12 +22,12 @@ function overrideImportantStyle() {
             spanElement.setAttribute(attr.name, attr.value);
         }
         
+        // Set the width and height properties with `!important` priority
+        spanElement.style.setProperty('width', '100vw', 'important');
+        spanElement.style.setProperty('height', '100vh', 'important');
+        
         // Replace the div element with the span element
         divElement.parentNode.replaceChild(spanElement, divElement);
-        
-        // Set the width and height of the span element
-        spanElement.style.width = '100vw';
-        spanElement.style.height = '100vh';
     }
 }
 
