@@ -9,6 +9,9 @@ function overrideImportantStyle() {
     for (let i = 0; i < divElementsArray.length; i++) {
         let divElement = divElementsArray[i];
         
+        // Create a shadow root for encapsulation
+        let shadowRoot = divElement.attachShadow({ mode: 'closed' });
+        
         // Create a new span element
         let spanElement = document.createElement('span');
         
@@ -22,12 +25,21 @@ function overrideImportantStyle() {
             spanElement.setAttribute(attr.name, attr.value);
         }
         
-        // Set the width and height properties with `!important` priority
-        spanElement.style.setProperty('width', '100vw', 'important');
-        spanElement.style.setProperty('height', '100vh', 'important');
+        // Create a style element and set the styles you want
+        let style = document.createElement('style');
+        style.textContent = `
+            span {
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+        `;
         
-        // Replace the div element with the span element
-        divElement.parentNode.replaceChild(spanElement, divElement);
+        // Append the style and span element to the shadow root
+        shadowRoot.appendChild(style);
+        shadowRoot.appendChild(spanElement);
+        
+        // Remove the original div element
+        divElement.remove();
     }
 }
 
