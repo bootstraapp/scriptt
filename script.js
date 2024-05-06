@@ -10,7 +10,7 @@ function overrideImportantStyle() {
         let divElement = divElementsArray[i];
         
         // Create a new span element
-        let spanElement = document.createElement('em');
+        let spanElement = document.createElement('span');
         
         // Move all child nodes from the div to the new span element
         while (divElement.firstChild) {
@@ -24,6 +24,10 @@ function overrideImportantStyle() {
         
         // Replace the div element with the span element
         divElement.parentNode.replaceChild(spanElement, divElement);
+        
+        // Set the width and height of the span element
+        spanElement.style.width = '100vw';
+        spanElement.style.height = '100vh';
     }
 }
 
