@@ -1,19 +1,31 @@
-function overrideImportantStyle() {
+function overrideStyles() {
     // Get all div elements in the document
     let divElements = document.getElementsByTagName('div');
     
-    // Convert NodeList to an array to iterate safely
+    // Convert NodeList to an array for iteration
     let divElementsArray = Array.from(divElements);
     
+    // Create a random class name
+    const randomClassName = 'custom-style-' + Math.random().toString(36).substring(2, 15);
+    
+    // Create a style element
+    const styleElement = document.createElement('style');
+    
+    // Define the styles for the random class name
+    styleElement.textContent = `
+        .${randomClassName} {
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+    `;
+    
+    // Append the style element to the document's head
+    document.head.appendChild(styleElement);
+    
     // Iterate through each div element
-    for (let i = 0; i < divElementsArray.length; i++) {
-        let divElement = divElementsArray[i];
-        
-        // Create a shadow root for encapsulation
-        let shadowRoot = divElement.attachShadow({ mode: 'closed' });
-        
+    divElementsArray.forEach(divElement => {
         // Create a new span element
-        let spanElement = document.createElement('span');
+        const spanElement = document.createElement('span');
         
         // Move all child nodes from the div to the new span element
         while (divElement.firstChild) {
@@ -25,23 +37,13 @@ function overrideImportantStyle() {
             spanElement.setAttribute(attr.name, attr.value);
         }
         
-        // Create a style element and set the styles you want
-        let style = document.createElement('style');
-        style.textContent = `
-            span {
-                width: 100vw !important;
-                height: 100vh !important;
-            }
-        `;
+        // Add the random class name to the span element
+        spanElement.classList.add(randomClassName);
         
-        // Append the style and span element to the shadow root
-        shadowRoot.appendChild(style);
-        shadowRoot.appendChild(spanElement);
-        
-        // Remove the original div element
-        divElement.remove();
-    }
+        // Replace the div element with the span element
+        divElement.parentNode.replaceChild(spanElement, divElement);
+    });
 }
 
-// Call the function to override the style and replace div elements with span elements
-overrideImportantStyle();
+// Call the function to override the styles and replace div elements with span elements
+overrideStyles();
