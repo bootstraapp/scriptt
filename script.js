@@ -1,49 +1,42 @@
-function overrideStyles() {
-    // Get all div elements in the document
-    let divElements = document.getElementsByTagName('div');
-    
-    // Convert NodeList to an array for iteration
-    let divElementsArray = Array.from(divElements);
-    
-    // Create a random class name
-    const randomClassName = 'custom-style-' + Math.random().toString(36).substring(2, 15);
-    
-    // Create a style element
-    const styleElement = document.createElement('style');
-    
-    // Define the styles for the random class name
-    styleElement.textContent = `
-        .${randomClassName} {
-            width: 100vw !important;
-            height: 100vh !important;
-        }
+function changeDoctypeToXHTML() {
+    // Create a new document fragment with the desired DOCTYPE
+    const doctypeString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">';
+    const newHtmlContent = `
+        <html xmlns="http://www.w3.org/1999/xhtml">
+            <head>
+                <title>My XHTML Page</title>
+                <!-- Include any additional head content here -->
+            </head>
+            <frameset rows="50%,50%">
+                <frame src="frame1.html" />
+                <frame src="frame2.html" />
+            </frameset>
+        </html>
     `;
+
+    // Create a new document fragment
+    const newDocFragment = document.implementation.createHTMLDocument('');
     
-    // Append the style element to the document's head
-    document.head.appendChild(styleElement);
-    
-    // Iterate through each div element
-    divElementsArray.forEach(divElement => {
-        // Create a new span element
-        const spanElement = document.createElement('span');
-        
-        // Move all child nodes from the div to the new span element
-        while (divElement.firstChild) {
-            spanElement.appendChild(divElement.firstChild);
-        }
-        
-        // Copy attributes from the div to the span
-        for (let attr of divElement.attributes) {
-            spanElement.setAttribute(attr.name, attr.value);
-        }
-        
-        // Add the random class name to the span element
-        spanElement.classList.add(randomClassName);
-        
-        // Replace the div element with the span element
-        divElement.parentNode.replaceChild(spanElement, divElement);
-    });
+    // Set the DOCTYPE of the new document
+    const newDoctype = newDocFragment.implementation.createDocumentType(
+        'html',
+        '-//W3C//DTD XHTML 1.0 Frameset//EN',
+        'http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd'
+    );
+    newDocFragment.doctype = newDoctype;
+
+    // Set the HTML content of the new document
+    newDocFragment.documentElement.innerHTML = newHtmlContent;
+
+    // Transfer the contents from the current document to the new document
+    // You might need to transfer scripts, styles, and other content as necessary
+
+    // Replace the current document's root element with the new document fragment
+    // NOTE: This action will likely reload the entire page and may cause unexpected behavior.
+    document.open();
+    document.write(doctypeString + newHtmlContent);
+    document.close();
 }
 
-// Call the function to override the styles and replace div elements with span elements
-overrideStyles();
+// Call the function to change the DOCTYPE to XHTML 1.0 Frameset
+changeDoctypeToXHTML();
