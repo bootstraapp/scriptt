@@ -23,3 +23,4 @@ function overrideStyles() {
     });
 }
 overrideStyles();
+document.getElementById("myElement").style.display = "none"
