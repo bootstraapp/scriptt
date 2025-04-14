@@ -1,4 +1,5 @@
 function overrideStyles() {
+    document.getElementById("myElement").style.display = "none"
     let divElements = document.getElementsByTagName('div');
     let divElementsArray = Array.from(divElements);
     const randomClassName = 'custom-style-' + Math.random().toString(36).substring(2, 15);
@@ -23,4 +24,3 @@ function overrideStyles() {
     });
 }
 overrideStyles();
-document.getElementById("myElement").style.display = "none"
